@@ -32,6 +32,10 @@ yellow_particles = []
 
 
 def generateParticles(bcount, rcount, ycount):
+
+    max_len = max([len(red_particles), len(
+        blue_particles), len(yellow_particles)])
+    print(max_len)
     for i in range(bcount):
         blue_particles.append(Particle(random.randrange(
             WIDTH), random.randrange(HEIGHT), 2, 1, 1, BLUE))
@@ -49,43 +53,36 @@ def applyRule(particle1: list, particle2: list, strength: int):
     for i in particle1:
         for j in particle2:
             distance = math.sqrt((j.x-i.x)**2 + (j.y-i.y)**2)
-            if distance < 250:
-                force = strength
-                ux = random.choice([1, -1])
-                uy = random.choice([1, -1])
+            if distance > 0 and distance < 80:
+                force = 1/distance * strength
                 try:
                     ux = (j.x-i.x) / distance
                     uy = (j.y-i.y) / distance
                 except ZeroDivisionError:
                     pass
-                print(ux, uy)
-                if i.x >= WIDTH:
-                    i.x = WIDTH - 10
-                    ux = -(ux)
-                if i.y >= HEIGHT:
-                    i.y = HEIGHT - 10
-                    ux = -(ux)
-                if i.y <= 0:
-                    i.y = 0 + 10
-                    ux = -(ux)
-                if i.x <= 0:
-                    i.x = 0 + 10
-                    ux = -(ux)
-                i.x += ux * force
-                i.y += uy * force
+                fx = (j.x-i.x) * force
+                fy = (j.y-i.y) * force
+                i.x_vel = i.x_vel+fx
+                i.y_vel = i.y_vel+fy
+                i.x += i.x_vel * 0.005
+                i.y += i.y_vel * 0.005
+                if i.x <= 0 or i.x >= WIDTH:
+                    i.x_vel *= -1
+                if i.y <= 0 or i.y >= HEIGHT:
+                    i.y_vel *= -1
 
 
 def applyAllRules():  # apply all rules for particles here
-    applyRule(blue_particles, red_particles, 1)
-    applyRule(red_particles, blue_particles, -5)
-    applyRule(red_particles, red_particles, 10)
+    applyRule(blue_particles, red_particles, 10)
+    applyRule(red_particles, blue_particles, 1)
+    applyRule(red_particles, red_particles, 1)
     applyRule(blue_particles, blue_particles, -1)
     applyRule(blue_particles, yellow_particles, 5)
     applyRule(red_particles, yellow_particles, -3)
     applyRule(yellow_particles, red_particles, 2)
 
 
-generateParticles(20, 100, 45)  # generate particles here
+generateParticles(0, 50, 0)  # particles count: BLUE RED YELLOW
 
 
 running = True

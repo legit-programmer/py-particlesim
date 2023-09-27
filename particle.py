@@ -8,10 +8,9 @@ class Particle:
         self.x = x
         self.y = y
         self.r = r
-        self.x_vel = x_vel
-        self.y_vel = y_vel
+        self.x_vel = 0
+        self.y_vel = 0
         self.color = color
 
     def draw(self, win: pygame.Surface):
         pygame.draw.circle(win, self.color, (self.x, self.y), self.r)
-        
