@@ -23,13 +23,26 @@ GREEN = (0, 255, 0)
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pygame Starter Template")
 
-
+font = pygame.font.Font(pygame.font.get_default_font(), 12)
+gh = font.render('gihub.com/legit-programmer', True, (255, 255, 255))
 clock = pygame.time.Clock()
 
 
 blue_particles = []
 red_particles = []
 yellow_particles = []
+
+r2r = random.randrange(-10.0, 10.0)
+r2b = random.randrange(-10.0, 10.0)
+r2g = random.randrange(-10.0, 10.0)
+
+b2b = random.randrange(-10.0, 10.0)
+b2r = random.randrange(-10.0, 10.0)
+b2g = random.randrange(-10.0, 10.0)
+
+g2g = random.randrange(-10.0, 10.0)
+g2r = random.randrange(-10.0, 10.0)
+g2b = random.randrange(-10.0, 10.0)
 
 
 def generateParticles(bcount, rcount, ycount):
@@ -61,7 +74,7 @@ def applyRule(particle1: list, particle2: list, strength: int):
 
             if distance > 0 and distance < 80:
                 force = 1/distance * strength
-                
+
                 fx += dx * force
                 fy += dy * force
         i.x_vel = (i.x_vel+fx)*0.5
@@ -75,23 +88,20 @@ def applyRule(particle1: list, particle2: list, strength: int):
 
 
 def applyAllRules():  # apply all rules for particles here
-    applyRule(blue_particles, red_particles, 1)
-    applyRule(red_particles, blue_particles, -1)
-    # applyRule(red_particles, red_particles, -5)
-    applyRule(blue_particles, blue_particles, -2)
-    applyRule(blue_particles, yellow_particles, 3)
-    applyRule(blue_particles, red_particles, 5)
-    applyRule(red_particles, blue_particles, 2)
-    applyRule(red_particles, red_particles, -2)
+    applyRule(blue_particles, red_particles, b2r)
+    applyRule(blue_particles, blue_particles, b2b)
+    applyRule(blue_particles, yellow_particles, b2g)
 
-    applyRule(red_particles, yellow_particles, -0.15)
+    applyRule(red_particles, blue_particles, r2b)
+    applyRule(red_particles, red_particles, r2r)
+    applyRule(red_particles, yellow_particles, r2g)
 
-    applyRule(yellow_particles, yellow_particles, -1)
-    # applyRule(red_particles, red_particles, -0.01)
+    applyRule(yellow_particles, red_particles, g2r)
+    applyRule(yellow_particles, yellow_particles, g2g)
+    applyRule(yellow_particles, blue_particles, g2b)
 
 
-
-generateParticles(200, 200, 100)  # particles count: BLUE RED YELLOW
+generateParticles(100, 100, 100)  # particles count: BLUE RED YELLOW
 
 
 running = True
@@ -107,7 +117,7 @@ while running:
         particle.draw(win)
 
     applyAllRules()
-    Slider(win, 'Helo', 50, 50, 50)
+    win.blit(gh, (710, 705))
 
     pygame.display.flip()
 
