@@ -1,0 +1,12 @@
+    applyRule(blue_particles, red_particles, 0.1)
+    applyRule(red_particles, blue_particles, 1)
+    applyRule(red_particles, red_particles, 0.1)
+    applyRule(blue_particles, blue_particles, -1)
+    applyRule(blue_particles, yellow_particles, 5)
+    applyRule(blue_particles, red_particles, 0.10)
+    applyRule(red_particles, blue_particles, -0.10)
+    applyRule(red_particles, red_particles, -1)
+    applyRule(red_particles, yellow_particles, -0.15)
+
+
+    
