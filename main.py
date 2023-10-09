@@ -101,7 +101,7 @@ def applyAllRules():  # apply all rules for particles here
     applyRule(yellow_particles, blue_particles, g2b)
 
 
-generateParticles(100, 100, 100)  # particles count: BLUE RED YELLOW
+generateParticles(200, 200, 200)  # particles count: BLUE RED YELLOW
 
 
 running = True
